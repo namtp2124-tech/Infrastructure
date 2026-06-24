@@ -647,6 +647,66 @@
             line-height: 1.4;
         }
 
+        /* Slide 9: Strategic Cost & Risk Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr 1.3fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .dash-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        .dash-card::-webkit-scrollbar {
+            width: 4px;
+        }
+        .dash-card::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .dash-card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+        }
+
+        .title-takeaways { color: var(--secondary); }
+        .title-burners { color: #f97316; }
+        .title-risks { color: #ef4444; }
+
+        .risk-box {
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .risk-high {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .risk-low {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #a7f3d0;
+        }
+
         /* Controls Footer */
         .controls-footer {
             height: 70px;
@@ -729,7 +789,7 @@
 
         /* Responsive */
         @media (max-width: 900px) {
-            .content-cols, .flow-grid, .glossary-grid {
+            .content-cols, .flow-grid, .glossary-grid, .dashboard-grid {
                 grid-template-columns: 1fr;
             }
             .flow-diagram-container {
@@ -769,7 +829,7 @@
                     <span class="slide-tag">Diagram</span>
                     <h2 class="slide-title">End-to-End AI Infrastructure Data Flow</h2>
                 </div>
-                <div class="slide-number">02 / 08</div>
+                <div class="slide-number">02 / 09</div>
             </div>
             <div class="slide-body">
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Click vào từng Block để xem mô tả chi tiết và quy mô áp dụng:</p>
@@ -816,7 +876,7 @@
                     <span class="slide-tag">Foundation</span>
                     <h2 class="slide-title">Day 16-19: GPU, Storage & Retrieval Layers</h2>
                 </div>
-                <div class="slide-number">03 / 08</div>
+                <div class="slide-number">03 / 09</div>
             </div>
             <div class="slide-body">
                 <div class="content-cols">
@@ -852,7 +912,7 @@
                     <span class="slide-tag">Governance</span>
                     <h2 class="slide-title">Day 20-23: Strategy, Laws & Adoption</h2>
                 </div>
-                <div class="slide-number">04 / 08</div>
+                <div class="slide-number">04 / 09</div>
             </div>
             <div class="slide-body">
                 <div class="content-cols">
@@ -888,7 +948,7 @@
                     <span class="slide-tag">Safety</span>
                     <h2 class="slide-title">Day 24-25: Responsible AI & Guardrail Defenses</h2>
                 </div>
-                <div class="slide-number">05 / 08</div>
+                <div class="slide-number">05 / 09</div>
             </div>
             <div class="slide-body">
                 <div class="content-cols">
@@ -924,7 +984,7 @@
                     <span class="slide-tag">Economics</span>
                     <h2 class="slide-title">Day 26-28: AI Economics & Pilot Scoping</h2>
                 </div>
-                <div class="slide-number">06 / 08</div>
+                <div class="slide-number">06 / 09</div>
             </div>
             <div class="slide-body">
                 <div class="content-cols">
@@ -960,7 +1020,7 @@
                     <span class="slide-tag">Matrix</span>
                     <h2 class="slide-title">Legacy Stack vs. Modern AI Stack (2026)</h2>
                 </div>
-                <div class="slide-number">07 / 08</div>
+                <div class="slide-number">07 / 09</div>
             </div>
             <div class="slide-body">
                 <div class="compare-toggle-bar">
@@ -1076,7 +1136,7 @@
                     <span class="slide-tag">Glossary</span>
                     <h2 class="slide-title">Technical Glossary</h2>
                 </div>
-                <div class="slide-number">08 / 08</div>
+                <div class="slide-number">08 / 09</div>
             </div>
             <div class="slide-body">
                 <div class="search-container">
@@ -1143,6 +1203,84 @@
                 </div>
             </div>
             <button class="btn-speaker-note" onclick="openSpeakerNotes(7)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 9: Strategic Cost & Risk Map -->
+        <div class="slide" id="slide-9">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Summary</span>
+                    <h2 class="slide-title">Bản Đồ Chiến Lược: Chi Phí & Rủi Ro</h2>
+                </div>
+                <div class="slide-number">09 / 09</div>
+            </div>
+            <div class="slide-body">
+                <div class="dashboard-grid">
+                    <!-- Column 1: Key Takeaways -->
+                    <div class="dash-card">
+                        <h3 class="dash-card-title title-takeaways">🎯 Ý Chính Cốt Lõi</h3>
+                        <ul class="content-list">
+                            <li class="content-list-item">
+                                <span class="bullet-dot"></span>
+                                <div>
+                                    <strong style="color: #fff;">EDD làm kim chỉ nam:</strong> Luôn viết bộ Test set (định lượng, chống ảo giác) trước khi viết prompt.
+                                </div>
+                            </li>
+                            <li class="content-list-item">
+                                <span class="bullet-dot"></span>
+                                <div>
+                                    <strong style="color: #fff;">Centaur vs Cyborg:</strong> Thiết kế phân chia công việc rõ ràng giữa người và AI để tối ưu năng suất thay vì áp dụng mù quáng.
+                                </div>
+                            </li>
+                            <li class="content-list-item">
+                                <span class="bullet-dot"></span>
+                                <div>
+                                    <strong style="color: #fff;">Niche Down để sống sót:</strong> Tập trung giải quyết bài toán ngách có dữ liệu độc quyền, tránh làm "thin wrappers" (tiện ích mỏng).
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2: Money Burners -->
+                    <div class="dash-card">
+                        <h3 class="dash-card-title title-burners">🔥 Nơi Đốt Tiền (GPU/API)</h3>
+                        <div class="risk-box" style="background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.2); color: #ffedd5;">
+                            <strong>1. Trùng lặp Token đầu vào:</strong> Không tối ưu hóa bộ đệm khiến hệ thống RAG dài phải gửi và tính toán lại System Prompt liên tục.
+                            <div style="margin-top: 4px; font-size: 0.75rem; color: var(--primary);">➔ Giải pháp: Prompt Caching / SGLang RadixAttention.</div>
+                        </div>
+                        <div class="risk-box" style="background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.2); color: #ffedd5;">
+                            <strong>2. GPU nhàn rỗi (Underutilization):</strong> Thuê GPU chuyên dụng lớn nhưng luồng truy vấn thấp, phân bổ tài nguyên không hợp lý.
+                            <div style="margin-top: 4px; font-size: 0.75rem; color: var(--primary);">➔ Giải pháp: Dùng vGPU, chia MIG hoặc serverless APIs.</div>
+                        </div>
+                        <div class="risk-box" style="background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.2); color: #ffedd5;">
+                            <strong>3. Ghi đè Lakehouse liên tục:</strong> Không sử dụng Deletion Vectors làm cho hệ phân tích phải ghi lại file Parquet lớn liên tục khi sửa đổi.
+                            <div style="margin-top: 4px; font-size: 0.75rem; color: var(--primary);">➔ Giải pháp: Delta Lake Deletion Vectors.</div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Risk Matrix -->
+                    <div class="dash-card">
+                        <h3 class="dash-card-title title-risks">⚠️ Ma Trận Rủi Ro</h3>
+                        <div class="risk-box risk-high">
+                            <strong style="color: #fca5a5;">🔴 RỦI RO CAO (Dễ phá sản / Dính pháp lý)</strong>
+                            <ul style="margin-top: 6px; padding-left: 12px; font-size: 0.75rem; line-height: 1.4; color: #fca5a5; list-style: square;">
+                                <li><strong>Vi phạm PDPL 91/2025:</strong> Sử dụng dữ liệu khách hàng nhạy cảm không xin phép.</li>
+                                <li><strong>Quảng cáo thổi phồng (Điều 198 BLHS):</strong> Cam kết AI làm được 100% nhưng thực tế ảo giác gây thiệt hại.</li>
+                                <li><strong>Bị bẻ khóa (Jailbreak):</strong> Chatbot sinh nội dung độc hại hoặc lộ dữ liệu công ty.</li>
+                            </ul>
+                        </div>
+                        <div class="risk-box risk-low">
+                            <strong style="color: #a7f3d0;">🟢 RỦI RO THẤP (Dễ xử lý nhanh)</strong>
+                            <ul style="margin-top: 6px; padding-left: 12px; font-size: 0.75rem; line-height: 1.4; color: #a7f3d0; list-style: square;">
+                                <li><strong>Sửa lỗi prompt định dạng:</strong> Khắc phục nhanh bằng Regex hoặc thư viện Guardrails AI.</li>
+                                <li><strong>Lưu trữ log hoạt động:</strong> Triển khai bản Langfuse self-hosted chi phí thấp.</li>
+                                <li><strong>Tổ chức đánh giá nội bộ:</strong> Chấm điểm thủ công trước khi tự động hóa hoàn toàn.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(8)">🎤 Gợi ý thuyết trình</button>
         </div>
 
     </div>
@@ -1238,7 +1376,15 @@
             - Nhập 'Radix' hoặc 'Paged' để xem giải thích chi tiết về tối ưu hóa bộ nhớ cache phục vụ.<br>
             - Nhập 'Guardrails' hoặc 'DeepEval' để xem về an toàn và kiểm thử.<br>
             - Nhập 'Polaris' hoặc 'Nessie' để tìm hiểu về catalog Lakehouse tiêu chuẩn mở.<br>
-            Đây là tài liệu tham khảo nhanh cực kỳ hữu ích cho đội ngũ kỹ thuật trong quá trình triển khai thực tế.`
+            Đây là tài liệu tham khảo nhanh cực kỳ hữu ích cho đội ngũ kỹ thuật trong quá trình triển khai thực tế.`,
+
+            // Slide 9
+            `<strong>Slide 9: Bản Đồ Chiến Lược - Tóm Tắt Chi Phí & Rủi Ro</strong><br><br>
+            • <strong>Tập trung của slide:</strong> Đây là slide tổng kết đắt giá nhất dành cho người ra quyết định (Founders/Managers) để nắm được bức tranh toàn cảnh sau khi học xong kỹ thuật.<br>
+            • <strong>Nội dung cốt lõi:</strong><br>
+            - <strong>Ý chính:</strong> Luôn nhấn mạnh tư duy EDD (kiểm thử định lượng trước) và chiến lược Niche Down tránh đối đầu trực diện với Big Tech.<br>
+            - <strong>Hạn chế 'đốt tiền':</strong> Chỉ ra 3 điểm gây lãng phí ngân sách lớn nhất là Token lặp lại trong RAG, GPU nhàn rỗi, và ghi đè dữ liệu Lakehouse lặp lại. Đưa ra giải pháp cụ thể như Prompt Caching, vGPU/MIG, và Deletion Vectors.<br>
+            - <strong>Quản trị rủi ro:</strong> Phân nhóm rõ ràng giữa rủi ro nghiêm trọng liên quan đến pháp lý Việt Nam (Nghị định PDPL, tội lừa dối khách hàng hình sự) và rủi ro kỹ thuật mức thấp để có chiến lược ứng phó phù hợp.`
         ];
 
         function updateSlideControls() {
@@ -1312,7 +1458,7 @@
         const flowData = {
             ingestion: {
                 title: "1. Ingestion & Orchestration",
-                desc: "Thu thập và điều hành luồng dữ liệu thô. Đảm bảo cấu trúc (schema) ổn định bằng Data Contracts trước khi ghi vào hệ thống lưu trữ.",
+                desc: "Thu nhập và điều hành luồng dữ liệu thô. Đảm bảo cấu trúc (schema) ổn định bằng Data Contracts trước khi ghi vào hệ thống lưu trữ.",
                 tools: ["Airflow 3.0", "Dagster", "Apache Kafka", "Flink"],
                 scales: [
                     { level: "Nhỏ (Prototype)", val: "Lưu file cục bộ (.txt, .json, .csv). Gọi trực tiếp qua các script Python ad-hoc." },

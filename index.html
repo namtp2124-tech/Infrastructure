@@ -149,6 +149,55 @@
             border-radius: 3px;
         }
 
+        /* Scale Badges Styles */
+        .scale-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 6px;
+            text-transform: uppercase;
+        }
+        .scale-small {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .scale-medium {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .scale-large {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Scale Table */
+        .scale-table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .scale-table td {
+            padding: 8px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: top;
+            line-height: 1.4;
+        }
+        .scale-label {
+            font-weight: 700;
+            color: #fff;
+            width: 110px;
+            font-size: 0.75rem;
+        }
+        .scale-val {
+            color: var(--text-muted);
+        }
+
         /* Slide 1: Welcome */
         .welcome-slide {
             justify-content: center;
@@ -325,7 +374,7 @@
         /* Slide 2: Interactive Flow Chart */
         .flow-grid {
             display: grid;
-            grid-template-columns: 1fr 320px;
+            grid-template-columns: 1fr 360px;
             gap: 30px;
             height: 100%;
         }
@@ -379,10 +428,12 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 25px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
+            overflow-y: auto;
+            max-height: 480px;
         }
 
         .flow-details-title {
@@ -585,6 +636,9 @@
             color: #fff;
             font-size: 0.95rem;
             margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .glossary-def {
@@ -718,7 +772,7 @@
                 <div class="slide-number">02 / 08</div>
             </div>
             <div class="slide-body">
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Click vào từng Block để xem mô tả chi tiết quy trình dữ liệu:</p>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Click vào từng Block để xem mô tả chi tiết và quy mô áp dụng:</p>
                 <div class="flow-grid">
                     <div class="flow-diagram-container">
                         <div class="flow-stage">
@@ -739,12 +793,15 @@
                     </div>
                     <div class="flow-details-box" id="flow-details">
                         <h3 class="flow-details-title" id="flow-title">1. Ingestion & Orchestration</h3>
-                        <p class="flow-details-desc" id="flow-desc">Dữ liệu thô từ nhiều nguồn được xử lý qua Flink/Kafka theo thời gian thực và được điều phối bằng Airflow 3.0/Dagster. Ở bước này, Data Contracts đảm bảo cấu trúc dữ liệu không bị lỗi trước khi lưu trữ.</p>
+                        <p class="flow-details-desc" id="flow-desc">Thu nhập và quản lý luồng dữ liệu thô. Đảm bảo cấu trúc (schema) ổn định bằng Data Contracts trước khi ghi vào hệ thống lưu trữ.</p>
                         <div class="flow-details-tools" id="flow-tools">
                             <span class="flow-tool-badge">Airflow 3.0</span>
                             <span class="flow-tool-badge">Dagster</span>
                             <span class="flow-tool-badge">Apache Kafka</span>
                             <span class="flow-tool-badge">Flink</span>
+                        </div>
+                        <div id="flow-scales-container">
+                            <!-- Populated dynamically via JS -->
                         </div>
                     </div>
                 </div>
@@ -768,9 +825,9 @@
                         <h3 class="card-title">GPU serving & Inference (Day 16)</h3>
                         <p class="card-desc" style="margin-bottom: 15px;">Tối ưu hóa tài nguyên GPU để phục vụ LLM với hiệu suất cao nhất:</p>
                         <ul class="content-list">
-                            <li class="content-list-item"><span class="bullet-dot"></span>vLLM (PagedAttention) loại bỏ phân mảnh bộ nhớ KV Cache.</li>
-                            <li class="content-list-item"><span class="bullet-dot"></span>SGLang (RadixAttention) tối ưu việc lưu nhớ ngữ cảnh lặp lại.</li>
-                            <li class="content-list-item"><span class="bullet-dot"></span>Áp dụng vGPU và MIG để phân bổ GPU hiệu quả cho các bài toán.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>vLLM (PagedAttention) loại bỏ phân mảnh bộ nhớ KV Cache. <span class="scale-badge scale-medium">Vừa</span></li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>SGLang (RadixAttention) tối ưu việc lưu nhớ ngữ cảnh lặp lại. <span class="scale-badge scale-large">Lớn</span></li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Áp dụng vGPU và MIG để phân bổ GPU hiệu quả cho các bài toán. <span class="scale-badge scale-large">Lớn</span></li>
                         </ul>
                     </div>
                     <div class="content-card">
@@ -778,9 +835,9 @@
                         <h3 class="card-title">Lakehouse & Vector Stores (Day 17-19)</h3>
                         <p class="card-desc" style="margin-bottom: 15px;">Lưu trữ dữ liệu lớn tích hợp tìm kiếm ngữ nghĩa:</p>
                         <ul class="content-list">
-                            <li class="content-list-item"><span class="bullet-dot"></span>Apache Iceberg với REST Catalog (Apache Polaris) quản lý phân quyền.</li>
-                            <li class="content-list-item"><span class="bullet-dot"></span>Delta Lake với Deletion Vectors giảm thiểu số lần ghi lại file.</li>
-                            <li class="content-list-item"><span class="bullet-dot"></span>Qdrant/Milvus hỗ trợ index HNSW & IVF-PQ phục vụ tìm kiếm Vector cực nhanh.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Apache Iceberg với REST Catalog (Apache Polaris) quản lý phân quyền. <span class="scale-badge scale-large">Lớn</span></li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Delta Lake với Deletion Vectors giảm thiểu số lần ghi lại file. <span class="scale-badge scale-medium">Vừa</span></li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Qdrant/Milvus hỗ trợ index HNSW & IVF-PQ phục vụ tìm kiếm Vector cực nhanh. <span class="scale-badge scale-medium">Vừa</span></li>
                         </ul>
                     </div>
                 </div>
@@ -850,9 +907,9 @@
                         <h3 class="card-title">Hệ Thống Phòng Thủ Đa Lớp (Day 25)</h3>
                         <p class="card-desc" style="margin-bottom: 15px;">Phòng vệ chủ động trước khi output tới tay người dùng:</p>
                         <ul class="content-list">
-                            <li class="content-list-item"><span class="bullet-dot"></span>Input Layer: LlamaGuard 3 sàng lọc câu hỏi đầu vào độc hại.</li>
-                            <li class="content-list-item"><span class="bullet-dot"></span>Architectural Gates: Bật NeMo Guardrails (Colang) ngăn luồng hội thoại sai lệch.</li>
-                            <li class="content-list-item"><span class="bullet-dot"></span>UI/UX Warning: Hiển thị cảnh báo trực quan, cơ chế Undo hành động.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Input Layer: LlamaGuard 3 sàng lọc câu hỏi đầu vào độc hại. <span class="scale-badge scale-medium">Vừa</span></li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Architectural Gates: Bật NeMo Guardrails (Colang) ngăn luồng hội thoại sai lệch. <span class="scale-badge scale-large">Lớn</span></li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>UI/UX Warning: Hiển thị cảnh báo trực quan, cơ chế Undo hành động. <span class="scale-badge scale-small">Nhỏ</span></li>
                         </ul>
                     </div>
                 </div>
@@ -876,7 +933,7 @@
                         <h3 class="card-title">Kinh Tế Học AI (Day 27)</h3>
                         <p class="card-desc" style="margin-bottom: 15px;">Quản lý chi phí gọi API và tài nguyên hạ tầng:</p>
                         <ul class="content-list">
-                            <li class="content-list-item"><span class="bullet-dot"></span>Bật Prompt Caching tiết kiệm đến 90% chi phí input token lặp lại.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Bật Prompt Caching tiết kiệm đến 90% chi phí input token lặp lại. <span class="scale-badge scale-medium">Vừa</span></li>
                             <li class="content-list-item"><span class="bullet-dot"></span>Giảm thiểu chi phí RAG: Phân biệt Query-time (biến đổi) và Indexing-time (cố định).</li>
                             <li class="content-list-item"><span class="bullet-dot"></span>Tính toán ROI 3 bước (Chi phí, Giá trị tạo ra, Stress test chi phí x2).</li>
                         </ul>
@@ -888,7 +945,7 @@
                         <ul class="content-list">
                             <li class="content-list-item"><span class="bullet-dot"></span>Niche Down: Tập trung bài toán ngách để tránh bị OpenAI hấp thụ (Absorption).</li>
                             <li class="content-list-item"><span class="bullet-dot"></span>AI Pilot Plan: Hứa gì, xin gì, timeline rõ ràng và stop condition cụ thể.</li>
-                            <li class="content-list-item"><span class="bullet-dot"></span>Sử dụng Langfuse/Phoenix OSS đo containment rate và telemetry traces.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Sử dụng Langfuse/Phoenix OSS đo containment rate và telemetry traces. <span class="scale-badge scale-medium">Vừa</span></li>
                         </ul>
                     </div>
                 </div>
@@ -919,7 +976,7 @@
                                 <th>Phân lớp</th>
                                 <th>Legacy Stack</th>
                                 <th>Modern AI Stack (2026)</th>
-                                <th>Lợi ích cốt lõi</th>
+                                <th>Mức Quy Mô & Lợi ích</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -927,19 +984,19 @@
                                 <td>Data Ingestion</td>
                                 <td class="text-legacy">Batch ETL, Cron-jobs, thủ công</td>
                                 <td class="text-modern">Streaming (Flink/Kafka) + Data Contracts (ODCS v3)</td>
-                                <td>Ngăn lỗi schema đầu vào làm sập hệ thống RAG</td>
+                                <td><span class="scale-badge scale-large">Lớn</span> Ngăn lỗi schema đầu vào làm sập hệ thống RAG</td>
                             </tr>
                             <tr>
                                 <td>Lakehouse Storage</td>
                                 <td class="text-legacy">Hadoop, ghi đè toàn bộ Parquet khi sửa</td>
                                 <td class="text-modern">Apache Iceberg REST / Delta Lake + Deletion Vectors</td>
-                                <td>Chỉ flag dòng bị xóa, tốc độ ghi dữ liệu nhanh hơn x10</td>
+                                <td><span class="scale-badge scale-medium">Vừa</span> Chỉ flag dòng bị xóa, tốc độ ghi dữ liệu nhanh hơn x10</td>
                             </tr>
                             <tr>
                                 <td>Metadata Catalog</td>
                                 <td class="text-legacy">Proprietary catalogs, local Hive indexes</td>
                                 <td class="text-modern">Apache Polaris / Nessie</td>
-                                <td>Đồng bộ siêu dữ liệu xuyên suốt các engine khác nhau</td>
+                                <td><span class="scale-badge scale-large">Lớn</span> Đồng bộ siêu dữ liệu xuyên suốt các engine khác nhau</td>
                             </tr>
                         </tbody>
                     </table>
@@ -951,7 +1008,7 @@
                                 <th>Phân lớp</th>
                                 <th>Legacy Stack</th>
                                 <th>Modern AI Stack (2026)</th>
-                                <th>Lợi ích cốt lõi</th>
+                                <th>Mức Quy Mô & Lợi ích</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -959,19 +1016,19 @@
                                 <td>Model Serving</td>
                                 <td class="text-legacy">Single fastapi PyTorch instances, serial calls</td>
                                 <td class="text-modern">vLLM / SGLang + RadixAttention & MIG</td>
-                                <td>Tránh phân mảnh RAM, tăng tốc xử lý structured outputs</td>
+                                <td><span class="scale-badge scale-medium">Vừa</span> Tránh phân mảnh RAM, tối ưu structured outputs</td>
                             </tr>
                             <tr>
                                 <td>Feature Storage</td>
                                 <td class="text-legacy">Code feature biến đổi trùng lặp ở train và serving</td>
                                 <td class="text-modern">Feast / Hopsworks (Redis online + Delta offline)</td>
-                                <td>Triệt tiêu hiện tượng Training-Serving Skew gây drift model</td>
+                                <td><span class="scale-badge scale-large">Lớn</span> Triệt tiêu hiện tượng Training-Serving Skew</td>
                             </tr>
                             <tr>
                                 <td>Inference cost</td>
                                 <td class="text-legacy">Thanh toán đầy đủ mọi token đầu vào lặp lại</td>
                                 <td class="text-modern">Prompt Caching</td>
-                                <td>Giảm tới 90% giá token đầu vào của system prompt & RAG</td>
+                                <td><span class="scale-badge scale-medium">Vừa</span> Giảm tới 90% giá token đầu vào của system prompt & RAG</td>
                             </tr>
                         </tbody>
                     </table>
@@ -983,7 +1040,7 @@
                                 <th>Phân lớp</th>
                                 <th>Legacy Stack</th>
                                 <th>Modern AI Stack (2026)</th>
-                                <th>Lợi ích cốt lõi</th>
+                                <th>Mức Quy Mô & Lợi ích</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -991,19 +1048,19 @@
                                 <td>Guardrail</td>
                                 <td class="text-legacy">Bộ lọc regex thô sơ, blocklists tĩnh</td>
                                 <td class="text-modern">LlamaGuard 3 + NeMo Guardrails + Guardrails AI</td>
-                                <td>Tự động phân loại và bắt lỗi độc hại theo thời gian thực</td>
+                                <td><span class="scale-badge scale-large">Lớn</span> Tự động phân loại và bắt lỗi độc hại theo thời gian thực</td>
                             </tr>
                             <tr>
                                 <td>Evaluation</td>
                                 <td class="text-legacy">Code test ad-hoc, đọc log tay</td>
                                 <td class="text-modern">DeepEval (CI/CD) + Ragas + Langfuse tracing</td>
-                                <td>Đo lường tự động chất lượng RAG trước khi merge code</td>
+                                <td><span class="scale-badge scale-medium">Vừa</span> Đo lường tự động chất lượng RAG trước khi merge code</td>
                             </tr>
                             <tr>
                                 <td>Roadmap</td>
                                 <td class="text-legacy">Kế hoạch dài hạn Gantt rigid</td>
                                 <td class="text-modern">Now/Next/Later Roadmap + Pilot Plan (Stop conditions)</td>
-                                <td>Thích nghi nhanh trước sự thay đổi năng lực của base models</td>
+                                <td><span class="scale-badge scale-small">Nhỏ</span> Thích nghi nhanh trước sự thay đổi năng lực của base models</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1023,48 +1080,65 @@
             </div>
             <div class="slide-body">
                 <div class="search-container">
-                    <input type="text" class="search-input" id="glossary-search" placeholder="Gõ tìm kiếm thuật ngữ (ví dụ: Radix, Paged, OTel...)" oninput="filterGlossary()">
+                    <input type="text" class="search-input" id="glossary-search" placeholder="Gõ tìm kiếm thuật ngữ (ví dụ: Radix, SQLite, Ollama...)" oninput="filterGlossary()">
                 </div>
                 <div class="glossary-grid" id="glossary-grid">
-                    <div class="glossary-card" data-term="radixattention">
-                        <div class="glossary-term">RadixAttention</div>
-                        <div class="glossary-def">Kỹ thuật trong SGLang lưu trữ KV cache dưới dạng cây tiền tố (Prefix Tree), tái sử dụng cache cho system prompt và các file RAG lặp lại.</div>
+                    <!-- Small Scale Tools -->
+                    <div class="glossary-card" data-term="sqlite / local files">
+                        <div class="glossary-term">SQLite / Local Files <span class="scale-badge scale-small">Nhỏ</span></div>
+                        <div class="glossary-def">Phù hợp cho dự án nhỏ (Prototype). Lưu trực tiếp dữ liệu thô dạng text, CSV hoặc file SQLite dưới vài nghìn dòng thay vì dựng Database phức tạp.</div>
                     </div>
+                    <div class="glossary-card" data-term="ollama / local apis">
+                        <div class="glossary-term">Ollama / Local APIs <span class="scale-badge scale-small">Nhỏ</span></div>
+                        <div class="glossary-def">Chạy thử nghiệm mô hình ngôn ngữ lớn (LLM) mã nguồn mở trực tiếp trên máy cá nhân không cần mạng và không tốn chi phí gọi API đám mây.</div>
+                    </div>
+                    <div class="glossary-card" data-term="system prompts & regex">
+                        <div class="glossary-term">System Prompts & Regex <span class="scale-badge scale-small">Nhỏ</span></div>
+                        <div class="glossary-def">Lớp phòng thủ an toàn thô sơ và tiết kiệm nhất. Điều hướng chatbot thông qua cấu trúc nhắc nhở và lọc từ khóa nhạy cảm cơ bản.</div>
+                    </div>
+
+                    <!-- Medium Scale Tools -->
                     <div class="glossary-card" data-term="pagedattention">
-                        <div class="glossary-term">PagedAttention</div>
-                        <div class="glossary-def">Thuật toán phân trang bộ nhớ KV Cache LLM của vLLM, tương tự cơ chế phân trang RAM trong OS, triệt tiêu phân mảnh bộ nhớ.</div>
-                    </div>
-                    <div class="glossary-card" data-term="data contracts">
-                        <div class="glossary-term">Data Contracts</div>
-                        <div class="glossary-def">Cam kết ràng buộc cấu trúc dữ liệu (SLA, Schema) giữa bên cung cấp dữ liệu thô và bên huấn luyện/RAG, bảo vệ pipeline tránh bị sập bất ngờ.</div>
+                        <div class="glossary-term">PagedAttention <span class="scale-badge scale-medium">Vừa</span></div>
+                        <div class="glossary-def">Thuật toán phân trang bộ nhớ KV Cache LLM của vLLM, tương tự cơ chế phân trang RAM trong OS, triệt tiêu phân mảnh bộ nhớ khi chạy mô hình.</div>
                     </div>
                     <div class="glossary-card" data-term="deletion vectors">
-                        <div class="glossary-term">Deletion Vectors</div>
-                        <div class="glossary-def">Tệp tin đánh dấu các dòng dữ liệu bị xóa trong định dạng Delta Lake/Iceberg, giúp truy vấn bỏ qua dòng đó mà không cần ghi lại file Parquet lớn.</div>
-                    </div>
-                    <div class="glossary-card" data-term="apache polaris">
-                        <div class="glossary-term">Apache Polaris</div>
-                        <div class="glossary-def">Catalog siêu dữ liệu mã nguồn mở cho Lakehouse thực thi chuẩn Iceberg REST Catalog, đồng bộ hóa phân quyền truy cập.</div>
+                        <div class="glossary-term">Deletion Vectors <span class="scale-badge scale-medium">Vừa</span></div>
+                        <div class="glossary-def">Tệp tin đánh dấu dòng dữ liệu bị xóa trong Delta Lake/Iceberg, giúp truy vấn bỏ qua dòng đó mà không cần ghi đè file Parquet lớn.</div>
                     </div>
                     <div class="glossary-card" data-term="graphrag">
-                        <div class="glossary-term">GraphRAG</div>
-                        <div class="glossary-def">Mô hình truy xuất RAG kết hợp cơ sở tri thức đồ thị (Knowledge Graph), kết nối các thực thể để trả lời tốt câu hỏi liên kết đa điểm.</div>
-                    </div>
-                    <div class="glossary-card" data-term="nemo guardrails">
-                        <div class="glossary-term">NeMo Guardrails</div>
-                        <div class="glossary-def">Thư viện của NVIDIA sử dụng ngôn ngữ Colang để lập trình luồng ranh giới an toàn cho chatbot, chống bẻ lái prompt (Jailbreak).</div>
+                        <div class="glossary-term">GraphRAG <span class="scale-badge scale-medium">Vừa</span></div>
+                        <div class="glossary-def">Mô hình truy xuất RAG kết hợp cơ sở tri thức đồ thị (Knowledge Graph), kết nối các thực thể để trả lời tốt câu hỏi liên kết đa điểm phức tạp.</div>
                     </div>
                     <div class="glossary-card" data-term="deepeval">
-                        <div class="glossary-term">DeepEval</div>
-                        <div class="glossary-def">Khung kiểm thử đơn vị (Unit testing) mã nguồn mở tích hợp CI/CD để chấm điểm chất lượng prompt, hallucination, và bias của LLM.</div>
+                        <div class="glossary-term">DeepEval <span class="scale-badge scale-medium">Vừa</span></div>
+                        <div class="glossary-def">Khung kiểm thử đơn vị (Unit testing) mã nguồn mở tích hợp CI/CD để chấm điểm chất lượng prompt, ảo giác, và bias của LLM trước khi release.</div>
                     </div>
                     <div class="glossary-card" data-term="langfuse">
-                        <div class="glossary-term">Langfuse</div>
-                        <div class="glossary-def">Nền tảng mã nguồn mở quản lý và tracing luồng đi của các Agent, thay thế cho các giải pháp cloud độc quyền đắt đỏ.</div>
+                        <div class="glossary-term">Langfuse <span class="scale-badge scale-medium">Vừa</span></div>
+                        <div class="glossary-def">Nền tảng mã nguồn mở quản lý và tracing chi tiết từng bước gọi API của các Agent, giúp phát hiện nút thắt cổ chai và kiểm tra chi phí.</div>
+                    </div>
+
+                    <!-- Large Scale Tools -->
+                    <div class="glossary-card" data-term="radixattention">
+                        <div class="glossary-term">RadixAttention <span class="scale-badge scale-large">Lớn</span></div>
+                        <div class="glossary-def">Kỹ thuật trong SGLang lưu trữ KV cache dưới dạng cây tiền tố (Prefix Tree), tự động tái sử dụng cache cho system prompt và các file tài liệu RAG lặp lại.</div>
+                    </div>
+                    <div class="glossary-card" data-term="data contracts">
+                        <div class="glossary-term">Data Contracts <span class="scale-badge scale-large">Lớn</span></div>
+                        <div class="glossary-def">Cam kết ràng buộc cấu trúc dữ liệu (SLA, Schema) giữa bên cung cấp dữ liệu thô và bên thụ hưởng (RAG), bảo vệ pipeline tránh bị sập bất ngờ.</div>
+                    </div>
+                    <div class="glossary-card" data-term="apache polaris">
+                        <div class="glossary-term">Apache Polaris <span class="scale-badge scale-large">Lớn</span></div>
+                        <div class="glossary-def">Catalog siêu dữ liệu mã nguồn mở cho Lakehouse thực thi chuẩn Iceberg REST Catalog, đồng bộ hóa phân quyền truy cập đa công cụ tính toán.</div>
+                    </div>
+                    <div class="glossary-card" data-term="nemo guardrails">
+                        <div class="glossary-term">NeMo Guardrails <span class="scale-badge scale-large">Lớn</span></div>
+                        <div class="glossary-def">Thư viện của NVIDIA sử dụng ngôn ngữ lập trình Colang để kiểm soát luồng ranh giới an toàn cho chatbot, chống tấn công bẻ lái prompt (Jailbreak).</div>
                     </div>
                     <div class="glossary-card" data-term="opentelemetry genai">
-                        <div class="glossary-term">OpenTelemetry GenAI (OTel)</div>
-                        <div class="glossary-def">Chuẩn semantic conventions của CNCF để xuất và theo dõi traces, spans, chi phí token của LLM một cách thống nhất.</div>
+                        <div class="glossary-term">OpenTelemetry GenAI <span class="scale-badge scale-large">Lớn</span></div>
+                        <div class="glossary-def">Chuẩn semantic conventions của CNCF để xuất dữ liệu telemetry, trace, và chi phí của LLM một cách thống nhất về hệ thống giám sát tập trung.</div>
                     </div>
                 </div>
             </div>
@@ -1117,15 +1191,12 @@
             • <strong>Lộ trình:</strong> Chúng ta sẽ đi qua cấu trúc hạ tầng từ xử lý dữ liệu Lakehouse, tối ưu hóa bộ nhớ GPU phục vụ, thiết kế hệ thống phòng thủ đa tầng cho đến việc xây dựng kế hoạch Pilot ngắn hạn đạt tỷ lệ chốt Deal cao. Hãy bấm nút 'Bắt Đầu Xem Slides' hoặc dùng nút mũi tên để theo dõi.`,
 
             // Slide 2
-            `<strong>Slide 2: Luồng Đi Của Dữ Liệu (E2E Data Flow)</strong><br><br>
-            • <strong>Tổng quan:</strong> Bản đồ này biểu diễn đường đi hoàn chỉnh của dữ liệu từ thô (Raw) đến khi được phản hồi tới khách hàng và giám sát vòng lặp liên tục.<br>
-            • <strong>Điểm cốt lõi:</strong> Hãy click vào từng hộp để xem chi tiết từng phân lớp:<br>
-            - <strong>1. Ingestion:</strong> Xử lý streaming Flink/Kafka được bảo vệ bởi <i>Data Contracts</i> nhằm ngăn chặn mọi sự thay đổi schema đột ngột từ nguồn làm sập hệ thống RAG.<br>
-            - <strong>2. Storage:</strong> Dữ liệu được lưu trữ trong Lakehouse (Iceberg/Delta). Kỹ thuật Z-ORDER và Deletion Vectors giúp bỏ qua việc quét file không liên quan, tăng tốc truy xuất dữ liệu lớn.<br>
-            - <strong>3. Retrieval & Storage:</strong> Nhúng vector lưu vào Qdrant/Milvus phục vụ tìm kiếm ngữ nghĩa, kết hợp Feature Store (Feast) để triệt tiêu hiện tượng Training-Serving Skew.<br>
-            - <strong>4. Serving & Inference:</strong> LLM được host trên các GPU chia sẻ qua MIG/vGPU, quản lý bởi vLLM & SGLang.<br>
-            - <strong>5. Guardrails:</strong> Lớp kiểm soát nội dung hội thoại đầu vào và đầu ra, đảm bảo an toàn hệ thống.<br>
-            - <strong>6. Evaluation:</strong> Thu thập log qua chuẩn OpenTelemetry GenAI để tự động chấm điểm hiệu năng (DeepEval/Ragas) và giám sát liên tục.`,
+            `<strong>Slide 2: Luồng Đi Của Dữ Liệu & Phân Cấp Quy Mô</strong><br><br>
+            • <strong>Tư duy thực tế:</strong> Không phải hệ thống nào cũng cần dựng Flink/Kafka hay Lakehouse khổng lồ. Việc lựa chọn công nghệ cần đi từ quy mô dữ liệu của dự án để tránh 'lấy dao mổ trâu giết gà' (over-engineering).<br>
+            • <strong>Nội dung slide:</strong> Click vào từng Block trong sơ đồ để xem mô tả quy trình dữ liệu cùng bảng phân cấp chi tiết tương ứng:<br>
+            - <strong>Nhỏ (Prototype/Startup giai đoạn đầu):</strong> Chỉ cần lưu dữ liệu dạng file đơn giản (.txt, .json), sử dụng SQLite hoặc FAISS cục bộ để lưu vector và Ollama để chạy offline.<br>
+            - <strong>Vừa (Growth/Scale vừa phải):</strong> Dựng cơ sở dữ liệu Postgres/MongoDB, chạy Qdrant Docker độc lập, dùng vLLM host trên 1 GPU riêng và giám sát qua Langfuse.<br>
+            - <strong>Lớn (Enterprise/Quy mô doanh nghiệp lớn):</strong> Cần luồng điều phối Flink/Kafka streaming có Data Contracts chặt chẽ, dựng Lakehouse Iceberg trên Spark Cluster, host mô hình trên cụm GPU phân tán dùng SGLang RadixAttention và phòng thủ đa tầng bằng NeMo Guardrails.`,
 
             // Slide 3
             `<strong>Slide 3: Day 16-19: GPU, Storage & Retrieval Layers (Hạ Tầng Kỹ Thuật Nền Tảng)</strong><br><br>
@@ -1190,6 +1261,11 @@
 
             // Close notes on slide transition
             notesOverlay.classList.remove('open');
+
+            // Trigger default flow details if on Slide 2
+            if (currentSlideIdx === 1) {
+                showFlowDetails('ingestion');
+            }
         }
 
         function navigateSlide(direction) {
@@ -1232,37 +1308,67 @@
             notesOverlay.classList.remove('open');
         }
 
-        // Slide 2: Interactive Flow Chart
+        // Slide 2: Interactive Flow Chart Data with Scale Suitability
         const flowData = {
             ingestion: {
                 title: "1. Ingestion & Orchestration",
-                desc: "Dữ liệu thô từ nhiều nguồn được xử lý qua Flink/Kafka theo thời gian thực và được điều phối bằng Airflow 3.0/Dagster. Ở bước này, Data Contracts đảm bảo cấu trúc dữ liệu không bị lỗi trước khi lưu trữ.",
-                tools: ["Airflow 3.0", "Dagster", "Apache Kafka", "Flink"]
+                desc: "Thu thập và điều hành luồng dữ liệu thô. Đảm bảo cấu trúc (schema) ổn định bằng Data Contracts trước khi ghi vào hệ thống lưu trữ.",
+                tools: ["Airflow 3.0", "Dagster", "Apache Kafka", "Flink"],
+                scales: [
+                    { level: "Nhỏ (Prototype)", val: "Lưu file cục bộ (.txt, .json, .csv). Gọi trực tiếp qua các script Python ad-hoc." },
+                    { level: "Vừa (Growth)", val: "Lưu cơ sở dữ liệu Postgres/MongoDB. Viết các script ETL chạy tự động qua Cron-job hoặc Dagster đơn giản." },
+                    { level: "Lớn (Enterprise)", val: "Luồng truyền tin streaming Kafka/Flink kết hợp Data Contracts (ODCS v3) để chống sập schema khi có cập nhật." }
+                ]
             },
             storage: {
                 title: "2. Lakehouse Storage",
-                desc: "Dữ liệu sau khi validate được đưa vào Bronze/Silver/Gold Lakehouse tables sử dụng định dạng Apache Iceberg hoặc Delta Lake. Ở lớp này, các kỹ thuật như Z-ORDER, Bloom Filters, và Deletion Vectors được áp dụng để tăng hiệu suất truy vấn.",
-                tools: ["Apache Iceberg", "Delta Lake", "Apache Spark", "Apache Polaris"]
+                desc: "Lưu trữ dữ liệu lớn một cách tối ưu. Tách biệt tài nguyên tính toán và lưu trữ, hỗ trợ truy vấn nhanh và quản lý phiên bản dữ liệu.",
+                tools: ["Apache Iceberg", "Delta Lake", "Apache Spark", "Apache Polaris"],
+                scales: [
+                    { level: "Nhỏ (Prototype)", val: "Lưu file Parquet/CSV trực tiếp trên đĩa cục bộ hoặc thư mục S3/MinIO đơn giản, không cần cấu trúc phức tạp." },
+                    { level: "Vừa (Growth)", val: "Sử dụng DuckDB (truy vấn file phân tích nhanh) hoặc Delta Lake/Iceberg chạy local để quản lý lịch sử dữ liệu." },
+                    { level: "Lớn (Enterprise)", val: "Bản Iceberg chuẩn kết hợp REST Catalog (Apache Polaris) + Spark Cluster để phân quyền và đồng bộ hóa đa công cụ tính toán." }
+                ]
             },
             retrieval: {
                 title: "3. AI Retrieval DBs",
-                desc: "Dữ liệu Gold được nhúng (Embeddings) để đưa vào Vector DB (Qdrant/Milvus) phục vụ tìm kiếm ngữ nghĩa. 2026 chứng kiến sự bùng nổ của GraphRAG giúp giải quyết câu hỏi liên kết phức tạp.",
-                tools: ["Qdrant", "Milvus", "Feast", "GraphRAG"]
+                desc: "Phục vụ truy xuất thông tin ngữ nghĩa (Semantic Search) cho RAG. Tích hợp Feature Store để đồng bộ dữ liệu đặc trưng.",
+                tools: ["Qdrant", "Milvus", "Feast", "GraphRAG"],
+                scales: [
+                    { level: "Nhỏ (Prototype)", val: "Sử dụng FAISS lưu trực tiếp trong RAM, hoặc cơ sở dữ liệu vector local như Chroma, SQLite-pgvector." },
+                    { level: "Vừa (Growth)", val: "Cài đặt Qdrant / Milvus phiên bản chạy Docker độc lập. Triển khai bản RAG thông thường." },
+                    { level: "Lớn (Enterprise)", val: "Cụm cụm phân tán Qdrant/Milvus, Feature Store (Feast) đồng bộ dữ liệu Redis/Delta, kết hợp GraphRAG liên kết đồ thị thực thể." }
+                ]
             },
             serving: {
                 title: "4. Serving & Inference",
-                desc: "LLMs được triển khai trên các engine phục vụ chuyên biệt như vLLM hoặc SGLang. SGLang tối ưu hóa structured output và prefix caching để giảm độ trễ tối đa.",
-                tools: ["vLLM", "SGLang", "TensorRT-LLM", "vGPU/MIG"]
+                desc: "Triển khai chạy mô hình (Inference) với chi phí và tốc độ tối ưu, quản lý phân mảnh bộ nhớ thông minh.",
+                tools: ["vLLM", "SGLang", "TensorRT-LLM", "vGPU/MIG"],
+                scales: [
+                    { level: "Nhỏ (Prototype)", val: "Sử dụng API thương mại đám mây (OpenAI, Anthropic) hoặc chạy Ollama cục bộ trên máy cá nhân." },
+                    { level: "Vừa (Growth)", val: "vLLM / SGLang chạy trên 1 GPU máy chủ riêng (như RTX 4090 hoặc A10G)." },
+                    { level: "Lớn (Enterprise)", val: "TensorRT-LLM chạy đa GPU phân tán, phân chia vGPU/MIG để tối đa hóa hiệu suất dùng GPU trong doanh nghiệp lớn." }
+                ]
             },
             guardrails: {
                 title: "5. Guardrails & Safety",
-                desc: "Hệ thống phòng thủ đa tầng gồm các lớp lọc Input (LlamaGuard 3), điều hướng nội dung hội thoại (NeMo Guardrails), cấu trúc output (Guardrails AI) và giao diện an toàn (Undo / warnings).",
-                tools: ["LlamaGuard 3", "NeMo Guardrails", "Guardrails AI", "Colang"]
+                desc: "Kiểm soát an toàn hội thoại đầu vào và đầu ra. Phòng vệ trước các cuộc tấn công jailbreak và rò rỉ dữ liệu.",
+                tools: ["LlamaGuard 3", "NeMo Guardrails", "Guardrails AI", "Colang"],
+                scales: [
+                    { level: "Nhỏ (Prototype)", val: "Viết System Prompt định hướng hành vi mô hình + kiểm tra Regex từ khóa nhạy cảm cơ bản." },
+                    { level: "Vừa (Growth)", val: "Gọi API LlamaGuard 3 kiểm duyệt hoặc tích hợp thư viện kiểm tra định dạng output Guardrails AI." },
+                    { level: "Lớn (Enterprise)", val: "Cấu hình NeMo Guardrails (Colang) quản lý luồng hội thoại cứng, kết hợp mô hình phân loại an toàn riêng biệt." }
+                ]
             },
             evaluation: {
                 title: "6. Eval & Observability",
-                desc: "Mọi cuộc gọi được xuất traces bằng chuẩn OpenTelemetry GenAI thông qua Langfuse/Phoenix. Đồng thời, DeepEval và Ragas chạy các unit tests chấm điểm tự động trong CI/CD để phát hiện drift model.",
-                tools: ["Langfuse", "DeepEval", "Ragas", "OpenTelemetry GenAI"]
+                desc: "Chấm điểm chất lượng câu trả lời và thu thập dấu vết (traces) vận hành của Agent để tối ưu hóa liên tục.",
+                tools: ["Langfuse", "DeepEval", "Ragas", "OpenTelemetry GenAI"],
+                scales: [
+                    { level: "Nhỏ (Prototype)", val: "Kiểm tra thủ công (đọc bằng mắt), lưu logs ra file text hoặc bảng Google Sheets." },
+                    { level: "Vừa (Growth)", val: "Sử dụng Langfuse (self-hosted) để trace lỗi và chạy Ragas đánh giá định kỳ các metrics." },
+                    { level: "Lớn (Enterprise)", val: "Tích hợp DeepEval chấm điểm tự động trong CI/CD pipeline, OpenTelemetry GenAI đẩy telemetry về Datadog/Dynatrace." }
+                ]
             }
         };
 
@@ -1286,6 +1392,31 @@
                 badge.innerText = tool;
                 toolsContainer.appendChild(badge);
             });
+
+            // Render Scale Suitability Table
+            let scaleHtml = `
+                <div style="margin-top: 12px; border-top: 1px solid var(--card-border); padding-top: 10px;">
+                    <h4 style="font-size: 0.85rem; color: #fff; margin-bottom: 6px;">📊 Phân Cấp Quy Mô (Scale Levels):</h4>
+                    <table class="scale-table">
+            `;
+            data.scales.forEach(s => {
+                let badgeClass = 'scale-small';
+                if (s.level.includes("Vừa")) badgeClass = 'scale-medium';
+                if (s.level.includes("Lớn")) badgeClass = 'scale-large';
+                
+                scaleHtml += `
+                    <tr>
+                        <td class="scale-label"><span class="scale-badge ${badgeClass}">${s.level}</span></td>
+                        <td class="scale-val">${s.val}</td>
+                    </tr>
+                `;
+            });
+            scaleHtml += '</table></div>';
+            
+            const oldScales = document.getElementById('flow-scales-container');
+            if (oldScales) {
+                oldScales.innerHTML = scaleHtml;
+            }
         }
 
         // Slide 7: Compare Matrix Tab Switcher

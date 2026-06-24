@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Infrastructure Track 2 Curriculum Presentation (2026)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #10b981;
+            --primary-glow: rgba(16, 185, 129, 0.3);
+            --secondary: #06b6d4;
+            --secondary-glow: rgba(6, 182, 212, 0.3);
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 40%);
+        }
+
+        h1, h2, h3, .font-outfit {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Presentation Container */
+        .presentation-container {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide {
+            position: absolute;
+            width: 90%;
+            max-width: 1200px;
+            height: 85%;
+            max-height: 720px;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+            z-index: 2;
+        }
+
+        /* Header Slide Styles */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .slide-title-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slide-tag {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slide-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffffff, #cfd8dc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-number {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .slide-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            padding-bottom: 50px; /* Space for absolute floating speaker note button */
+        }
+
+        /* Slide Scrollbar */
+        .slide-body::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .slide-body::-webkit-scrollbar-thumb {
+            background: var(--card-border);
+            border-radius: 3px;
+        }
+
+        /* Slide 1: Welcome */
+        .welcome-slide {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--primary) 70%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .welcome-badges {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .welcome-badge {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .welcome-badge span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #0b0f19;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 14px 28px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px var(--primary-glow);
+            transition: all 0.3s ease;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px var(--primary-glow);
+        }
+
+        /* Speaker Note Trigger Button */
+        .btn-speaker-note {
+            position: absolute;
+            bottom: 25px;
+            right: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+
+        .btn-speaker-note:hover {
+            background: rgba(6, 182, 212, 0.15);
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px var(--secondary-glow);
+        }
+
+        /* Speaker Note Glass Overlay Panel */
+        .speaker-notes-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 250px;
+            background: rgba(10, 15, 28, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--card-border);
+            border-radius: 20px 20px 0 0;
+            padding: 25px 40px;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .speaker-notes-panel.open {
+            transform: translateY(0);
+        }
+
+        .notes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+        }
+
+        .notes-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-close-notes {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .btn-close-notes:hover {
+            color: #fff;
+        }
+
+        .notes-content {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #e5e7eb;
+            padding-right: 10px;
+        }
+
+        .notes-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .notes-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        /* Slide 2: Interactive Flow Chart */
+        .flow-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+            height: 100%;
+        }
+
+        .flow-diagram-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .flow-stage {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .flow-node {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 140px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .flow-node:hover, .flow-node.selected {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .flow-arrow {
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .flow-details-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .flow-details-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 8px;
+        }
+
+        .flow-details-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .flow-details-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .flow-tool-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* Slide Content Components */
+        .content-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .card-header-icon {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .content-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .content-list-item {
+            display: flex;
+            gap: 12px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .bullet-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        /* Slide 7: Compare Matrix */
+        .compare-toggle-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 12px;
+        }
+
+        .btn-toggle-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-toggle-tab.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .compare-table th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--card-border);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .compare-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        .text-legacy {
+            color: #f43f5e;
+            font-weight: 500;
+        }
+
+        .text-modern {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Slide 8: Glossary Search */
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px var(--secondary-glow);
+        }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .glossary-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .glossary-card:hover {
+            border-color: var(--secondary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .glossary-term {
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        .glossary-def {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Controls Footer */
+        .controls-footer {
+            height: 70px;
+            border-top: 1px solid var(--card-border);
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 15, 25, 0.8);
+            z-index: 10;
+        }
+
+        .nav-btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #0b0f19;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            max-width: 500px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 0 30px;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .fullscreen-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .fullscreen-btn:hover {
+            color: #fff;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .content-cols, .flow-grid, .glossary-grid {
+                grid-template-columns: 1fr;
+            }
+            .flow-diagram-container {
+                height: 300px;
+            }
+            .slide {
+                height: 85%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Presentation Viewport -->
+    <div class="presentation-container">
+
+        <!-- Slide 1: Welcome -->
+        <div class="slide active welcome-slide" id="slide-1">
+            <div class="welcome-badges">
+                <div class="welcome-badge"><span style="background-color: var(--primary);"></span>Syllabus Overview</div>
+                <div class="welcome-badge"><span style="background-color: var(--secondary);"></span>Track 2</div>
+                <div class="welcome-badge"><span style="background-color: var(--accent);"></span>2026 Standards</div>
+            </div>
+            <h1 class="welcome-title">AI Infrastructure & Product Engineering</h1>
+            <p class="welcome-subtitle">
+                Giáo trình tổng hợp chi tiết từ Day 16 đến Day 28 dành cho học viên và chuyên gia xây dựng hệ thống AI quy mô doanh nghiệp.
+            </p>
+            <button class="btn-start" onclick="changeSlide(1)">Bắt Đầu Xem Slides</button>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(0)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 2: Data Flow Mapping -->
+        <div class="slide" id="slide-2">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Diagram</span>
+                    <h2 class="slide-title">End-to-End AI Infrastructure Data Flow</h2>
+                </div>
+                <div class="slide-number">02 / 08</div>
+            </div>
+            <div class="slide-body">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">Click vào từng Block để xem mô tả chi tiết quy trình dữ liệu:</p>
+                <div class="flow-grid">
+                    <div class="flow-diagram-container">
+                        <div class="flow-stage">
+                            <div class="flow-node selected" onclick="showFlowDetails('ingestion')" id="node-ingestion">1. Ingestion & Orchestration</div>
+                            <div class="flow-arrow">➔</div>
+                            <div class="flow-node" onclick="showFlowDetails('storage')" id="node-storage">2. Lakehouse Storage</div>
+                        </div>
+                        <div class="flow-stage">
+                            <div class="flow-node" onclick="showFlowDetails('retrieval')" id="node-retrieval">3. AI Retrieval DBs</div>
+                            <div class="flow-arrow">➔</div>
+                            <div class="flow-node" onclick="showFlowDetails('serving')" id="node-serving">4. Serving & Inference</div>
+                        </div>
+                        <div class="flow-stage">
+                            <div class="flow-node" onclick="showFlowDetails('guardrails')" id="node-guardrails">5. Guardrails & Safety</div>
+                            <div class="flow-arrow">➔</div>
+                            <div class="flow-node" onclick="showFlowDetails('evaluation')" id="node-evaluation">6. Eval & Observability</div>
+                        </div>
+                    </div>
+                    <div class="flow-details-box" id="flow-details">
+                        <h3 class="flow-details-title" id="flow-title">1. Ingestion & Orchestration</h3>
+                        <p class="flow-details-desc" id="flow-desc">Dữ liệu thô từ nhiều nguồn được xử lý qua Flink/Kafka theo thời gian thực và được điều phối bằng Airflow 3.0/Dagster. Ở bước này, Data Contracts đảm bảo cấu trúc dữ liệu không bị lỗi trước khi lưu trữ.</p>
+                        <div class="flow-details-tools" id="flow-tools">
+                            <span class="flow-tool-badge">Airflow 3.0</span>
+                            <span class="flow-tool-badge">Dagster</span>
+                            <span class="flow-tool-badge">Apache Kafka</span>
+                            <span class="flow-tool-badge">Flink</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(1)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 3: Days 16-19 -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Foundation</span>
+                    <h2 class="slide-title">Day 16-19: GPU, Storage & Retrieval Layers</h2>
+                </div>
+                <div class="slide-number">03 / 08</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-cols">
+                    <div class="content-card">
+                        <span class="card-header-icon">⚡</span>
+                        <h3 class="card-title">GPU serving & Inference (Day 16)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Tối ưu hóa tài nguyên GPU để phục vụ LLM với hiệu suất cao nhất:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>vLLM (PagedAttention) loại bỏ phân mảnh bộ nhớ KV Cache.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>SGLang (RadixAttention) tối ưu việc lưu nhớ ngữ cảnh lặp lại.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Áp dụng vGPU và MIG để phân bổ GPU hiệu quả cho các bài toán.</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <span class="card-header-icon">📂</span>
+                        <h3 class="card-title">Lakehouse & Vector Stores (Day 17-19)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Lưu trữ dữ liệu lớn tích hợp tìm kiếm ngữ nghĩa:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>Apache Iceberg với REST Catalog (Apache Polaris) quản lý phân quyền.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Delta Lake với Deletion Vectors giảm thiểu số lần ghi lại file.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Qdrant/Milvus hỗ trợ index HNSW & IVF-PQ phục vụ tìm kiếm Vector cực nhanh.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(2)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 4: Days 20-23 -->
+        <div class="slide" id="slide-4">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Governance</span>
+                    <h2 class="slide-title">Day 20-23: Strategy, Laws & Adoption</h2>
+                </div>
+                <div class="slide-number">04 / 08</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-cols">
+                    <div class="content-card">
+                        <span class="card-header-icon">⚖️</span>
+                        <h3 class="card-title">Quản trị & Luật AI Việt Nam (Day 21-22)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Đảm bảo tính tuân thủ pháp luật để tránh rủi ro hình sự cho Startup:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>Khung 3R (Rules, Rails, Rituals) thiết lập tiêu chuẩn vận hành an toàn.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Tuân thủ Luật AI Việt Nam (134/2025) & Nghị định Bảo vệ Dữ liệu (PDPL 91/2025).</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Phòng tránh rủi ro: Điều 198 BLHS (Lừa dối khách hàng) và Điều 324 (Rửa tiền).</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <span class="card-header-icon">🔄</span>
+                        <h3 class="card-title">Chiến lược & Thay đổi (Day 20, 23)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Giúp AI đi sâu vào hoạt động doanh nghiệp thực tế:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>Sử dụng RICE score để xác định Quick Win thay vì làm dàn trải.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Mô hình ADKAR tìm điểm nghẽn của sự từ chối dùng AI.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Thiết kế công việc theo Centaur (chia việc rõ) vs. Cyborg (hòa nhập dòng code).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(3)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 5: Days 24-25 -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Safety</span>
+                    <h2 class="slide-title">Day 24-25: Responsible AI & Guardrail Defenses</h2>
+                </div>
+                <div class="slide-number">05 / 08</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-cols">
+                    <div class="content-card">
+                        <span class="card-header-icon">⚠️</span>
+                        <h3 class="card-title">8 Lỗi Hệ Thống Phổ Biến (Day 24)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Các điểm yếu mà AI Engine thường gặp phải:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>Hallucination (Ảo tưởng), Bias (Thiên lệch), Sycophancy (Nịnh nọt).</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Rò rỉ dữ liệu nhạy cảm (Privacy Leaks) và bị tấn công Jailbreak.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Thiết lập Test set (Out-of-scope, Adversarial) bằng DeepEval/Ragas trước khi build.</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <span class="card-header-icon">🛡️</span>
+                        <h3 class="card-title">Hệ Thống Phòng Thủ Đa Lớp (Day 25)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Phòng vệ chủ động trước khi output tới tay người dùng:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>Input Layer: LlamaGuard 3 sàng lọc câu hỏi đầu vào độc hại.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Architectural Gates: Bật NeMo Guardrails (Colang) ngăn luồng hội thoại sai lệch.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>UI/UX Warning: Hiển thị cảnh báo trực quan, cơ chế Undo hành động.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(4)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 6: Days 26-28 -->
+        <div class="slide" id="slide-6">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Economics</span>
+                    <h2 class="slide-title">Day 26-28: AI Economics & Pilot Scoping</h2>
+                </div>
+                <div class="slide-number">06 / 08</div>
+            </div>
+            <div class="slide-body">
+                <div class="content-cols">
+                    <div class="content-card">
+                        <span class="card-header-icon">💵</span>
+                        <h3 class="card-title">Kinh Tế Học AI (Day 27)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Quản lý chi phí gọi API và tài nguyên hạ tầng:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>Bật Prompt Caching tiết kiệm đến 90% chi phí input token lặp lại.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Giảm thiểu chi phí RAG: Phân biệt Query-time (biến đổi) và Indexing-time (cố định).</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Tính toán ROI 3 bước (Chi phí, Giá trị tạo ra, Stress test chi phí x2).</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <span class="card-header-icon">🚀</span>
+                        <h3 class="card-title">Lập Kế Hoạch Pilot (Day 26, 28)</h3>
+                        <p class="card-desc" style="margin-bottom: 15px;">Chạy thử nghiệm thành công để kêu gọi vốn / duyệt dự án:</p>
+                        <ul class="content-list">
+                            <li class="content-list-item"><span class="bullet-dot"></span>Niche Down: Tập trung bài toán ngách để tránh bị OpenAI hấp thụ (Absorption).</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>AI Pilot Plan: Hứa gì, xin gì, timeline rõ ràng và stop condition cụ thể.</li>
+                            <li class="content-list-item"><span class="bullet-dot"></span>Sử dụng Langfuse/Phoenix OSS đo containment rate và telemetry traces.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(5)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 7: Legacy vs 2026 Comparison -->
+        <div class="slide" id="slide-7">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Matrix</span>
+                    <h2 class="slide-title">Legacy Stack vs. Modern AI Stack (2026)</h2>
+                </div>
+                <div class="slide-number">07 / 08</div>
+            </div>
+            <div class="slide-body">
+                <div class="compare-toggle-bar">
+                    <button class="btn-toggle-tab active" onclick="switchCompareTab('data')">1. Data & Storage</button>
+                    <button class="btn-toggle-tab" onclick="switchCompareTab('serving')">2. Serving & Ops</button>
+                    <button class="btn-toggle-tab" onclick="switchCompareTab('safety')">3. Safety & Strategy</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <!-- Data & Storage Tab -->
+                    <table class="compare-table" id="compare-table-data">
+                        <thead>
+                            <tr>
+                                <th>Phân lớp</th>
+                                <th>Legacy Stack</th>
+                                <th>Modern AI Stack (2026)</th>
+                                <th>Lợi ích cốt lõi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Data Ingestion</td>
+                                <td class="text-legacy">Batch ETL, Cron-jobs, thủ công</td>
+                                <td class="text-modern">Streaming (Flink/Kafka) + Data Contracts (ODCS v3)</td>
+                                <td>Ngăn lỗi schema đầu vào làm sập hệ thống RAG</td>
+                            </tr>
+                            <tr>
+                                <td>Lakehouse Storage</td>
+                                <td class="text-legacy">Hadoop, ghi đè toàn bộ Parquet khi sửa</td>
+                                <td class="text-modern">Apache Iceberg REST / Delta Lake + Deletion Vectors</td>
+                                <td>Chỉ flag dòng bị xóa, tốc độ ghi dữ liệu nhanh hơn x10</td>
+                            </tr>
+                            <tr>
+                                <td>Metadata Catalog</td>
+                                <td class="text-legacy">Proprietary catalogs, local Hive indexes</td>
+                                <td class="text-modern">Apache Polaris / Nessie</td>
+                                <td>Đồng bộ siêu dữ liệu xuyên suốt các engine khác nhau</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Serving & Ops Tab -->
+                    <table class="compare-table" id="compare-table-serving" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th>Phân lớp</th>
+                                <th>Legacy Stack</th>
+                                <th>Modern AI Stack (2026)</th>
+                                <th>Lợi ích cốt lõi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Model Serving</td>
+                                <td class="text-legacy">Single fastapi PyTorch instances, serial calls</td>
+                                <td class="text-modern">vLLM / SGLang + RadixAttention & MIG</td>
+                                <td>Tránh phân mảnh RAM, tăng tốc xử lý structured outputs</td>
+                            </tr>
+                            <tr>
+                                <td>Feature Storage</td>
+                                <td class="text-legacy">Code feature biến đổi trùng lặp ở train và serving</td>
+                                <td class="text-modern">Feast / Hopsworks (Redis online + Delta offline)</td>
+                                <td>Triệt tiêu hiện tượng Training-Serving Skew gây drift model</td>
+                            </tr>
+                            <tr>
+                                <td>Inference cost</td>
+                                <td class="text-legacy">Thanh toán đầy đủ mọi token đầu vào lặp lại</td>
+                                <td class="text-modern">Prompt Caching</td>
+                                <td>Giảm tới 90% giá token đầu vào của system prompt & RAG</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Safety & Strategy Tab -->
+                    <table class="compare-table" id="compare-table-safety" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th>Phân lớp</th>
+                                <th>Legacy Stack</th>
+                                <th>Modern AI Stack (2026)</th>
+                                <th>Lợi ích cốt lõi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Guardrail</td>
+                                <td class="text-legacy">Bộ lọc regex thô sơ, blocklists tĩnh</td>
+                                <td class="text-modern">LlamaGuard 3 + NeMo Guardrails + Guardrails AI</td>
+                                <td>Tự động phân loại và bắt lỗi độc hại theo thời gian thực</td>
+                            </tr>
+                            <tr>
+                                <td>Evaluation</td>
+                                <td class="text-legacy">Code test ad-hoc, đọc log tay</td>
+                                <td class="text-modern">DeepEval (CI/CD) + Ragas + Langfuse tracing</td>
+                                <td>Đo lường tự động chất lượng RAG trước khi merge code</td>
+                            </tr>
+                            <tr>
+                                <td>Roadmap</td>
+                                <td class="text-legacy">Kế hoạch dài hạn Gantt rigid</td>
+                                <td class="text-modern">Now/Next/Later Roadmap + Pilot Plan (Stop conditions)</td>
+                                <td>Thích nghi nhanh trước sự thay đổi năng lực của base models</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(6)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+        <!-- Slide 8: Interactive Glossary -->
+        <div class="slide" id="slide-8">
+            <div class="slide-header">
+                <div class="slide-title-area">
+                    <span class="slide-tag">Glossary</span>
+                    <h2 class="slide-title">Technical Glossary</h2>
+                </div>
+                <div class="slide-number">08 / 08</div>
+            </div>
+            <div class="slide-body">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="glossary-search" placeholder="Gõ tìm kiếm thuật ngữ (ví dụ: Radix, Paged, OTel...)" oninput="filterGlossary()">
+                </div>
+                <div class="glossary-grid" id="glossary-grid">
+                    <div class="glossary-card" data-term="radixattention">
+                        <div class="glossary-term">RadixAttention</div>
+                        <div class="glossary-def">Kỹ thuật trong SGLang lưu trữ KV cache dưới dạng cây tiền tố (Prefix Tree), tái sử dụng cache cho system prompt và các file RAG lặp lại.</div>
+                    </div>
+                    <div class="glossary-card" data-term="pagedattention">
+                        <div class="glossary-term">PagedAttention</div>
+                        <div class="glossary-def">Thuật toán phân trang bộ nhớ KV Cache LLM của vLLM, tương tự cơ chế phân trang RAM trong OS, triệt tiêu phân mảnh bộ nhớ.</div>
+                    </div>
+                    <div class="glossary-card" data-term="data contracts">
+                        <div class="glossary-term">Data Contracts</div>
+                        <div class="glossary-def">Cam kết ràng buộc cấu trúc dữ liệu (SLA, Schema) giữa bên cung cấp dữ liệu thô và bên huấn luyện/RAG, bảo vệ pipeline tránh bị sập bất ngờ.</div>
+                    </div>
+                    <div class="glossary-card" data-term="deletion vectors">
+                        <div class="glossary-term">Deletion Vectors</div>
+                        <div class="glossary-def">Tệp tin đánh dấu các dòng dữ liệu bị xóa trong định dạng Delta Lake/Iceberg, giúp truy vấn bỏ qua dòng đó mà không cần ghi lại file Parquet lớn.</div>
+                    </div>
+                    <div class="glossary-card" data-term="apache polaris">
+                        <div class="glossary-term">Apache Polaris</div>
+                        <div class="glossary-def">Catalog siêu dữ liệu mã nguồn mở cho Lakehouse thực thi chuẩn Iceberg REST Catalog, đồng bộ hóa phân quyền truy cập.</div>
+                    </div>
+                    <div class="glossary-card" data-term="graphrag">
+                        <div class="glossary-term">GraphRAG</div>
+                        <div class="glossary-def">Mô hình truy xuất RAG kết hợp cơ sở tri thức đồ thị (Knowledge Graph), kết nối các thực thể để trả lời tốt câu hỏi liên kết đa điểm.</div>
+                    </div>
+                    <div class="glossary-card" data-term="nemo guardrails">
+                        <div class="glossary-term">NeMo Guardrails</div>
+                        <div class="glossary-def">Thư viện của NVIDIA sử dụng ngôn ngữ Colang để lập trình luồng ranh giới an toàn cho chatbot, chống bẻ lái prompt (Jailbreak).</div>
+                    </div>
+                    <div class="glossary-card" data-term="deepeval">
+                        <div class="glossary-term">DeepEval</div>
+                        <div class="glossary-def">Khung kiểm thử đơn vị (Unit testing) mã nguồn mở tích hợp CI/CD để chấm điểm chất lượng prompt, hallucination, và bias của LLM.</div>
+                    </div>
+                    <div class="glossary-card" data-term="langfuse">
+                        <div class="glossary-term">Langfuse</div>
+                        <div class="glossary-def">Nền tảng mã nguồn mở quản lý và tracing luồng đi của các Agent, thay thế cho các giải pháp cloud độc quyền đắt đỏ.</div>
+                    </div>
+                    <div class="glossary-card" data-term="opentelemetry genai">
+                        <div class="glossary-term">OpenTelemetry GenAI (OTel)</div>
+                        <div class="glossary-def">Chuẩn semantic conventions của CNCF để xuất và theo dõi traces, spans, chi phí token của LLM một cách thống nhất.</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-speaker-note" onclick="openSpeakerNotes(7)">🎤 Gợi ý thuyết trình</button>
+        </div>
+
+    </div>
+
+    <!-- Speaker Notes Overlay Glass Panel -->
+    <div class="speaker-notes-panel" id="speaker-notes-overlay">
+        <div class="notes-header">
+            <div class="notes-title">🎤 Gợi Ý Thuyết Trình (Speaker Notes)</div>
+            <button class="btn-close-notes" onclick="closeSpeakerNotes()">✕</button>
+        </div>
+        <div class="notes-content" id="speaker-notes-text">
+            Nội dung thuyết trình hiển thị ở đây...
+        </div>
+    </div>
+
+    <!-- Navigation controls -->
+    <div class="controls-footer">
+        <button class="fullscreen-btn" onclick="toggleFullscreen()">
+            <span style="font-size:1.1rem;">⛶</span> Toàn màn hình
+        </button>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+        <div class="nav-btn-group">
+            <button class="nav-btn" id="btn-prev" onclick="navigateSlide(-1)" disabled>◀</button>
+            <button class="nav-btn" id="btn-next" onclick="navigateSlide(1)">▶</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIdx = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progress-bar');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const notesOverlay = document.getElementById('speaker-notes-overlay');
+        const notesText = document.getElementById('speaker-notes-text');
+
+        // Speaker Notes content dictionary
+        const speakerNotesData = [
+            // Slide 1
+            `<strong>Slide 1: Giới Thiệu & Tổng Quan</strong><br><br>
+            • <strong>Lời chào:</strong> Chào mừng các bạn đến với buổi tổng hợp và định hướng chương trình <i>Track 2: Hạ tầng AI & Kỹ thuật Sản phẩm (Days 16 - 28)</i>.<br>
+            • <strong>Mục tiêu:</strong> Track này không chỉ nói về cách dùng các thư viện API, mà tập trung sâu vào cách thiết lập hạ tầng thực tế phục vụ AI (LLMOps), cách xây dựng các rào chắn phòng thủ an toàn và tính toán hiệu quả kinh tế để tối ưu hóa biên lợi nhuận cho Startup trong năm 2026.<br>
+            • <strong>Lộ trình:</strong> Chúng ta sẽ đi qua cấu trúc hạ tầng từ xử lý dữ liệu Lakehouse, tối ưu hóa bộ nhớ GPU phục vụ, thiết kế hệ thống phòng thủ đa tầng cho đến việc xây dựng kế hoạch Pilot ngắn hạn đạt tỷ lệ chốt Deal cao. Hãy bấm nút 'Bắt Đầu Xem Slides' hoặc dùng nút mũi tên để theo dõi.`,
+
+            // Slide 2
+            `<strong>Slide 2: Luồng Đi Của Dữ Liệu (E2E Data Flow)</strong><br><br>
+            • <strong>Tổng quan:</strong> Bản đồ này biểu diễn đường đi hoàn chỉnh của dữ liệu từ thô (Raw) đến khi được phản hồi tới khách hàng và giám sát vòng lặp liên tục.<br>
+            • <strong>Điểm cốt lõi:</strong> Hãy click vào từng hộp để xem chi tiết từng phân lớp:<br>
+            - <strong>1. Ingestion:</strong> Xử lý streaming Flink/Kafka được bảo vệ bởi <i>Data Contracts</i> nhằm ngăn chặn mọi sự thay đổi schema đột ngột từ nguồn làm sập hệ thống RAG.<br>
+            - <strong>2. Storage:</strong> Dữ liệu được lưu trữ trong Lakehouse (Iceberg/Delta). Kỹ thuật Z-ORDER và Deletion Vectors giúp bỏ qua việc quét file không liên quan, tăng tốc truy xuất dữ liệu lớn.<br>
+            - <strong>3. Retrieval & Storage:</strong> Nhúng vector lưu vào Qdrant/Milvus phục vụ tìm kiếm ngữ nghĩa, kết hợp Feature Store (Feast) để triệt tiêu hiện tượng Training-Serving Skew.<br>
+            - <strong>4. Serving & Inference:</strong> LLM được host trên các GPU chia sẻ qua MIG/vGPU, quản lý bởi vLLM & SGLang.<br>
+            - <strong>5. Guardrails:</strong> Lớp kiểm soát nội dung hội thoại đầu vào và đầu ra, đảm bảo an toàn hệ thống.<br>
+            - <strong>6. Evaluation:</strong> Thu thập log qua chuẩn OpenTelemetry GenAI để tự động chấm điểm hiệu năng (DeepEval/Ragas) và giám sát liên tục.`,
+
+            // Slide 3
+            `<strong>Slide 3: Day 16-19: GPU, Storage & Retrieval Layers (Hạ Tầng Kỹ Thuật Nền Tảng)</strong><br><br>
+            • <strong>Day 16 (GPU Serving):</strong> Điểm mấu chốt của host LLM doanh nghiệp là tốc độ và giá thành. vLLM giải quyết phân mảnh KV Cache bằng PagedAttention. Trong khi đó, SGLang sử dụng RadixAttention, lưu bộ nhớ đệm dạng cây tiền tố để người dùng không phải trả tiền và tốn thời gian tính toán lại system prompts hay tài liệu RAG dài lặp lại.<br>
+            • <strong>Day 17-19 (Storage & Retrieval):</strong> Khi cập nhật dữ liệu lớn, việc ghi đè file Parquet truyền thống rất đắt. Deletion Vectors giải quyết bằng cách ghi chú dòng bị xóa sang file metadata phụ. Để tìm kiếm thông tin không bị ảo giác, ta sử dụng HNSW/IVF-PQ để tìm kiếm vector ngữ nghĩa, kết hợp GraphRAG tạo dựng mạng lưới thực thể đồ thị giúp LLM hiểu bức tranh tổng thể khi trả lời các câu hỏi phức tạp.`,
+
+            // Slide 4
+            `<strong>Slide 4: Day 20-23: Strategy, Laws & Adoption (Chiến Lược, Pháp Luật & Sự Chấp Nhận)</strong><br><br>
+            • <strong>Day 20 & 23 (Chiến lược & Thay đổi):</strong> Trong Startup, tài nguyên rất giới hạn. Chúng ta sử dụng RICE Score ( Reach, Impact, Confidence, Effort) để tìm các 'Quick Wins' - tính khả thi cao, tác động lớn để triển khai trước. Khi chuyển giao công nghệ cho doanh nghiệp, dùng mô hình ADKAR để tìm điểm nghẽn (ví dụ nhân viên sợ mất việc sẽ cản trở Desire). Thiết kế luồng việc theo Centaur (chia rõ ranh giới việc AI và việc người) hoặc Cyborg (người và AI hòa quyện làm việc cùng nhau).<br>
+            • <strong>Day 21-22 (Rủi ro pháp lý tại Việt Nam):</strong> Đây là điểm sống còn của Founders. Sản phẩm phải tuân thủ Luật AI Việt Nam 134/2025 và Nghị định bảo vệ dữ liệu cá nhân PDPL 91/2025. Phải duy trì 'Evidence Trails' (nhật ký thử nghiệm, chứng từ kiểm thử) để tránh vi phạm nghiêm trọng Điều 198 BLHS (Lừa dối khách hàng) khi thổi phồng năng lực AI và tránh liên đới rửa tiền Điều 324 BLHS trong các cổng thanh toán.`,
+
+            // Slide 5
+            `<strong>Slide 5: Day 24-25: Responsible AI & Guardrail Defenses (AI Có Trách Nhiệm & Phòng Thủ Đa Lớp)</strong><br><br>
+            • <strong>Day 24 (Map the Failure):</strong> AI luôn có lỗi. Chúng ta phải lập danh sách 8 lỗi phổ biến (Hallucination, Bias, Jailbreak...). Áp dụng tư duy <i>Evaluation-Driven Development (EDD)</i>: Phải viết bộ Test set (gồm dữ liệu bình thường, dữ liệu nhiễu và câu hỏi độc hại) bằng DeepEval/Ragas trước khi bắt tay viết prompt cho ứng dụng.<br>
+            • <strong>Day 25 (Solution Design):</strong> Để bảo vệ chatbot trước các nỗ lực Jailbreak nguy hiểm, ta thiết kế hệ thống phòng vệ đa tầng: <br>
+            - <i>Input Gate:</i> LlamaGuard 3 kiểm duyệt câu hỏi.<br>
+            - <i>Architectural Gate:</i> NeMo Guardrails viết bằng Colang kiểm soát hội thoại trong phạm vi cho phép.<br>
+            - <i>Output Gate:</i> Guardrails AI validate định dạng dữ liệu (JSON schema).<br>
+            - <i>UX Layer:</i> Cảnh báo thông minh, cho phép người dùng hoàn tác (Undo) và có cơ chế chuyển giao cho tổng đài viên (Human-in-the-loop) khi AI bất lực.`,
+
+            // Slide 6
+            `<strong>Slide 6: Day 26-28: AI Product Economics & Pilot Scoping (Kinh Tế Học AI & Triển Khai Thử Nghiệm)</strong><br><br>
+            • <strong>Day 27 (Kinh tế học):</strong> Gọi API LLM không hề rẻ. Ta cần tính toán chi phí RAG gồm Query-time (biến đổi theo số lượng người dùng) và Indexing-time (cố định). Sử dụng Prompt Caching là bắt buộc để giảm tới 90% chi phí đầu vào. Phải làm bài toán ROI 3 bước (Chi phí, Giá trị thực tiễn, và kiểm tra áp lực khi chi phí tăng gấp đôi) trước khi trình dự án.<br>
+            • <strong>Day 26 & 28 (Sản phẩm & Pilot):</strong> Tránh việc xây dựng các 'Thin wrappers' (ứng dụng vỏ bọc mỏng) dễ bị các Big Tech tích hợp tính năng đè bẹp. Thay vào đó, hãy 'Niche Down' tập trung vào thị trường ngách có dữ liệu riêng biệt. Khi lập kế hoạch AI Pilot, cần xác định rõ ngân sách, chỉ số thành công (ví dụ Containment rate > 75%) và 'Stop conditions' (điều kiện dừng dự án) để đảm bảo không bị sa lầy vốn.`,
+
+            // Slide 7
+            `<strong>Slide 7: Bảng Đối Chiếu Legacy vs. Modern Stack (2026)</strong><br><br>
+            • <strong>Ý nghĩa:</strong> Bảng so sánh này giúp doanh nghiệp thấy rõ sự thay đổi và lý do cần nâng cấp lên hạ tầng AI hiện đại năm 2026.<br>
+            • <strong>Điểm nhấn chính:</strong><br>
+            - Dữ liệu chuyển từ Batch ETL thủ công sang Streaming Flink/Kafka có bảo vệ bằng Data Contracts.<br>
+            - Lưu trữ nâng cấp từ Hadoop/Hive nặng nề sang Apache Iceberg REST Catalog (Polaris) và Delta Lake có Deletion Vectors giúp cập nhật cực nhanh.<br>
+            - Phục vụ LLM chuyển từ host FastAPI đơn lẻ sang vLLM/SGLang với PagedAttention và RadixAttention.<br>
+            - Chuyển từ bộ lọc regex thô sơ sang các hệ thống an toàn đa lớp như LlamaGuard 3, NeMo Guardrails và giám sát tự động bằng Langfuse, OpenTelemetry GenAI. Giúp giảm chi phí vận hành từ 80-90% và tăng tính bảo mật hệ thống lên tối đa.`,
+
+            // Slide 8
+            `<strong>Slide 8: Từ Điển Thuật Ngữ Kỹ Thuật (Technical Glossary)</strong><br><br>
+            • <strong>Mục tiêu:</strong> Cung cấp danh mục các thuật ngữ cốt lõi mà mọi kỹ sư AI và Product Manager năm 2026 cần làm chủ để làm việc hiệu quả với các đối tác doanh nghiệp.<br>
+            • <strong>Tính tương tác:</strong> Các bạn có thể sử dụng ô tìm kiếm để lọc nhanh thuật ngữ quan tâm. Ví dụ:<br>
+            - Nhập 'Radix' hoặc 'Paged' để xem giải thích chi tiết về tối ưu hóa bộ nhớ cache phục vụ.<br>
+            - Nhập 'Guardrails' hoặc 'DeepEval' để xem về an toàn và kiểm thử.<br>
+            - Nhập 'Polaris' hoặc 'Nessie' để tìm hiểu về catalog Lakehouse tiêu chuẩn mở.<br>
+            Đây là tài liệu tham khảo nhanh cực kỳ hữu ích cho đội ngũ kỹ thuật trong quá trình triển khai thực tế.`
+        ];
+
+        function updateSlideControls() {
+            // Update active states
+            slides.forEach((slide, idx) => {
+                if (idx === currentSlideIdx) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update Progress Bar
+            const percent = (currentSlideIdx / (totalSlides - 1)) * 100;
+            progressBar.style.width = percent + '%';
+
+            // Disable buttons at boundaries
+            btnPrev.disabled = currentSlideIdx === 0;
+            btnNext.disabled = currentSlideIdx === totalSlides - 1;
+
+            // Close notes on slide transition
+            notesOverlay.classList.remove('open');
+        }
+
+        function navigateSlide(direction) {
+            currentSlideIdx = Math.max(0, Math.min(totalSlides - 1, currentSlideIdx + direction));
+            updateSlideControls();
+        }
+
+        function changeSlide(index) {
+            currentSlideIdx = index;
+            updateSlideControls();
+        }
+
+        // Keyboard Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                navigateSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                navigateSlide(-1);
+            }
+        });
+
+        // Toggle Fullscreen
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Speaker Notes Actions
+        function openSpeakerNotes(index) {
+            notesText.innerHTML = speakerNotesData[index];
+            notesOverlay.classList.add('open');
+        }
+
+        function closeSpeakerNotes() {
+            notesOverlay.classList.remove('open');
+        }
+
+        // Slide 2: Interactive Flow Chart
+        const flowData = {
+            ingestion: {
+                title: "1. Ingestion & Orchestration",
+                desc: "Dữ liệu thô từ nhiều nguồn được xử lý qua Flink/Kafka theo thời gian thực và được điều phối bằng Airflow 3.0/Dagster. Ở bước này, Data Contracts đảm bảo cấu trúc dữ liệu không bị lỗi trước khi lưu trữ.",
+                tools: ["Airflow 3.0", "Dagster", "Apache Kafka", "Flink"]
+            },
+            storage: {
+                title: "2. Lakehouse Storage",
+                desc: "Dữ liệu sau khi validate được đưa vào Bronze/Silver/Gold Lakehouse tables sử dụng định dạng Apache Iceberg hoặc Delta Lake. Ở lớp này, các kỹ thuật như Z-ORDER, Bloom Filters, và Deletion Vectors được áp dụng để tăng hiệu suất truy vấn.",
+                tools: ["Apache Iceberg", "Delta Lake", "Apache Spark", "Apache Polaris"]
+            },
+            retrieval: {
+                title: "3. AI Retrieval DBs",
+                desc: "Dữ liệu Gold được nhúng (Embeddings) để đưa vào Vector DB (Qdrant/Milvus) phục vụ tìm kiếm ngữ nghĩa. 2026 chứng kiến sự bùng nổ của GraphRAG giúp giải quyết câu hỏi liên kết phức tạp.",
+                tools: ["Qdrant", "Milvus", "Feast", "GraphRAG"]
+            },
+            serving: {
+                title: "4. Serving & Inference",
+                desc: "LLMs được triển khai trên các engine phục vụ chuyên biệt như vLLM hoặc SGLang. SGLang tối ưu hóa structured output và prefix caching để giảm độ trễ tối đa.",
+                tools: ["vLLM", "SGLang", "TensorRT-LLM", "vGPU/MIG"]
+            },
+            guardrails: {
+                title: "5. Guardrails & Safety",
+                desc: "Hệ thống phòng thủ đa tầng gồm các lớp lọc Input (LlamaGuard 3), điều hướng nội dung hội thoại (NeMo Guardrails), cấu trúc output (Guardrails AI) và giao diện an toàn (Undo / warnings).",
+                tools: ["LlamaGuard 3", "NeMo Guardrails", "Guardrails AI", "Colang"]
+            },
+            evaluation: {
+                title: "6. Eval & Observability",
+                desc: "Mọi cuộc gọi được xuất traces bằng chuẩn OpenTelemetry GenAI thông qua Langfuse/Phoenix. Đồng thời, DeepEval và Ragas chạy các unit tests chấm điểm tự động trong CI/CD để phát hiện drift model.",
+                tools: ["Langfuse", "DeepEval", "Ragas", "OpenTelemetry GenAI"]
+            }
+        };
+
+        function showFlowDetails(stage) {
+            // Update node selection
+            document.querySelectorAll('.flow-node').forEach(node => {
+                node.classList.remove('selected');
+            });
+            document.getElementById(`node-${stage}`).classList.add('selected');
+
+            // Update details
+            const data = flowData[stage];
+            document.getElementById('flow-title').innerText = data.title;
+            document.getElementById('flow-desc').innerText = data.desc;
+            
+            const toolsContainer = document.getElementById('flow-tools');
+            toolsContainer.innerHTML = '';
+            data.tools.forEach(tool => {
+                const badge = document.createElement('span');
+                badge.className = 'flow-tool-badge';
+                badge.innerText = tool;
+                toolsContainer.appendChild(badge);
+            });
+        }
+
+        // Slide 7: Compare Matrix Tab Switcher
+        function switchCompareTab(tab) {
+            document.querySelectorAll('.btn-toggle-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.compare-table').forEach(table => {
+                table.style.display = 'none';
+            });
+            document.getElementById(`compare-table-${tab}`).style.display = 'table';
+        }
+
+        // Slide 8: Glossary Search
+        function filterGlossary() {
+            const query = document.getElementById('glossary-search').value.toLowerCase();
+            document.querySelectorAll('.glossary-card').forEach(card => {
+                const term = card.getAttribute('data-term');
+                if (term.includes(query)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize controls
+        updateSlideControls();
+    </script>
+</body>
+</html>
